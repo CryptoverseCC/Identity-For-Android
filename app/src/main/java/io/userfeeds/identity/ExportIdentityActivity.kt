@@ -17,22 +17,9 @@ class ExportIdentityActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         window.setFlags(FLAG_SECURE, FLAG_SECURE)
         setContentView(R.layout.export_identity_activity)
-        copyToClipboardView.setOnClickListener { copyToClipboard() }
-        shareView.setOnClickListener { share() }
+        copyToClipboardView.setOnClickListener { copyToClipboard(privatePublicHex) }
+        shareView.setOnClickListener { sharePlainText(privatePublicHex) }
         qrCodeView.setImageBitmap(QRCode.from(privatePublicHex).withSize(512, 512).bitmap())
-    }
-
-    private fun copyToClipboard() {
-        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clip = ClipData.newPlainText(null, privatePublicHex)
-        clipboard.primaryClip = clip
-    }
-
-    private fun share() {
-        val sendIntent = Intent(Intent.ACTION_SEND)
-        sendIntent.putExtra(Intent.EXTRA_TEXT, privatePublicHex)
-        sendIntent.type = "text/plain"
-        startActivity(sendIntent)
     }
 
     private val privatePublicHex by lazy {
