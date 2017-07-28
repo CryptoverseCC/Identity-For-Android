@@ -19,6 +19,14 @@ internal fun generateAesSecretKey(): SecretKey {
     }
 }
 
+internal fun encryptDataUsingKeyStore(data: ByteArray): Pair<ByteArray, ByteArray> {
+    return with(KeyStore.getInstance("AndroidKeyStore")) {
+        load(null)
+        val secretKey = getKey("key1", null) as SecretKey
+        encryptData(secretKey, data)
+    }
+}
+
 internal fun encryptData(secretKey: SecretKey, data: ByteArray): Pair<ByteArray, ByteArray> {
     return with(Cipher.getInstance(TRANSFORMATION)) {
         init(Cipher.ENCRYPT_MODE, secretKey)

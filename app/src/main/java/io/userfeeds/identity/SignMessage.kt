@@ -13,7 +13,7 @@ fun signMessage(context: Context, message: String): Signature {
     return Signature("ecdsa.secp256r1", signature.toHexString(), repo.publicKeyHex)
 }
 
-private fun sign(key: PrivateKey, message: String): ByteArray {
+internal fun sign(key: PrivateKey, message: String): ByteArray {
     return with(java.security.Signature.getInstance("SHA256WithECDSA")) {
         initSign(key)
         update(message.toByteArray())
