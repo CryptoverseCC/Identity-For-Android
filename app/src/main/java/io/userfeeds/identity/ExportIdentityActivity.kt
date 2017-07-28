@@ -3,6 +3,7 @@ package io.userfeeds.identity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.export_identity_activity.*
@@ -15,6 +16,7 @@ class ExportIdentityActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.export_identity_activity)
         copyToClipboardView.setOnClickListener { copyToClipboard() }
+        shareView.setOnClickListener { share() }
         qrCodeView.setImageBitmap(QRCode.from(privatePublicHex).withSize(512, 512).bitmap())
     }
 
@@ -24,10 +26,17 @@ class ExportIdentityActivity : AppCompatActivity() {
         clipboard.primaryClip = clip
     }
 
-    private val privatePublicHex: String get() {
+    private fun share() {
+        val sendIntent = Intent(Intent.ACTION_SEND)
+        sendIntent.putExtra(Intent.EXTRA_TEXT, privatePublicHex)
+        sendIntent.type = "text/plain"
+        startActivity(sendIntent)
+    }
+
+    private val privatePublicHex by lazy {
         val repo = KeyRepository(this)
         val privateKey = decryptDataUsingKeyStore(repo.encryptedPrivateKey, repo.iv)
         val privateKeyHex = privateKey.toHexString()
-        return "$privateKeyHex:${repo.publicKeyHex}"
+        "$privateKeyHex:${repo.publicKeyHex}"
     }
 }
