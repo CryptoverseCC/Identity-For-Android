@@ -17,4 +17,27 @@
         android:layout_height="wrap_content"
         android:text="Import identity"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Public key:"/>
+
+    <TextView
+        android:id="@+id/publicKeyView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"/>
+
+    <Button
+        android:id="@+id/copyToClipboardView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Copy to clipboard"/>
+
+    <Button
+        android:id="@+id/shareView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Share"/>
+
 </LinearLayout>
