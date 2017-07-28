@@ -13,8 +13,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        exportView.setOnClickListener { exportIdentity() }
-        importView.setOnClickListener { importIdentity() }
+        exportView.setOnClickListener { startActivity<ExportIdentityActivity>() }
+        importView.setOnClickListener { startActivity<ImportIdentityActivity>() }
         copyToClipboardView.setOnClickListener { copyToClipboard(publicKeyHex) }
         shareView.setOnClickListener { sharePlainText(publicKeyHex) }
     }
@@ -22,16 +22,6 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         publicKeyView.text = publicKeyHex
-    }
-
-    private fun exportIdentity() {
-        val intent = Intent(this, ExportIdentityActivity::class.java)
-        startActivity(intent)
-    }
-
-    private fun importIdentity() {
-        val intent = Intent(this, ImportIdentityActivity::class.java)
-        startActivity(intent)
     }
 
     private val publicKeyHex get() = KeyRepository(this).publicKeyHex
