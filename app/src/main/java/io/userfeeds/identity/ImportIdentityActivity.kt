@@ -30,7 +30,7 @@ class ImportIdentityActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         val scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data)
-        if (scanResult != null) {
+        if (scanResult?.contents != null) {
             verifyAndSave(scanResult.contents)
             return
         }
