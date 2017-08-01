@@ -11,6 +11,7 @@ import kotlin.LazyThreadSafetyMode.NONE
 class SignMessageActivity : AppCompatActivity() {
 
     private val message by lazy(NONE) { intent.getStringExtra("io.userfeeds.identity.message") }
+    private val requestId by lazy(NONE) { intent.getStringExtra("io.userfeeds.identity.requestId") }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,10 +35,9 @@ class SignMessageActivity : AppCompatActivity() {
 
     private fun finishWithSignature() {
         val signature = signMessage(this, message)
-        Log.e("TAG", "signature: " + signature)
-        Log.e("TAG", message)
         val data = Intent()
                 .putExtra("io.userfeeds.identity.message", message)
+                .putExtra("io.userfeeds.identity.requestId", requestId)
                 .putExtra("io.userfeeds.identity.signature.type", signature.type)
                 .putExtra("io.userfeeds.identity.signature.value", signature.value)
                 .putExtra("io.userfeeds.identity.signature.creator", signature.creator)
